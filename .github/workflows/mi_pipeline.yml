@@ -1,0 +1,47 @@
+name: Pipeline Avanzado de Integracion Continua
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  Validacion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificando sintaxis
+        run: echo "Analizando estructura del proyecto..." && sleep 3
+
+  Build:
+    needs: Validacion
+    runs-on: ubuntu-latest
+    steps:
+      - name: Construyendo aplicacion
+        run: echo "Compilando codigo fuente..." && sleep 5
+
+  Test_Frontend:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutando pruebas Frontend
+        run: echo "Probando interfaz de usuario..." && sleep 5
+
+  Test_Backend:
+    needs: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutando pruebas Backend
+        run: echo "Probando logica del servidor..." && sleep 5
+
+  Seguridad:
+    needs: [Test_Frontend, Test_Backend]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Escaneo de seguridad
+        run: echo "Revisando vulnerabilidades..." && sleep 4
+
+  Deploy:
+    needs: Seguridad
+    runs-on: ubuntu-latest
+    steps:
+      - name: Desplegando sistema
+        run: echo "Aplicacion desplegada correctamente." && sleep 2
