@@ -5,25 +5,20 @@ jobs:
   Compilacion:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout de codigo
+        uses: actions/checkout@v4
       - name: Simulando Build
         run: echo "Compilando binarios..." && sleep 5
 
-  Pruebas_Frontend:
+  Pruebas_Unitarias:
     needs: Compilacion
     runs-on: ubuntu-latest
     steps:
-      - name: Test Frontend
-        run: echo "Probando frontend..." && sleep 5
-
-  Pruebas_Backend:
-    needs: Compilacion
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test Backend
-        run: echo "Probando backend..." && sleep 5
+      - name: Ejecutando Tests
+        run: echo "Validando integridad del codigo..." && sleep 5
 
   Despliegue_Produccion:
-    needs: [Pruebas_Frontend, Pruebas_Backend]
+    needs: Pruebas_Unitarias
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
